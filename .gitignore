@@ -1,0 +1,14 @@
+# The rules defined here should apply to everyone working with the repository
+# You can also define personal ignore patterns using .git/info/exclude
+**/bin/
+**/obj/
+**/.vs/
+**/.vscode/
+**/*.user
+**/*.pyc
+**/coverage.json
+
+# We don't want binary files in our git repository
+# See also https://docs.microsoft.com/en-us/azure/devops/repos/git/manage-large-files
+*.zip
+*.dll

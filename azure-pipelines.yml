@@ -1,0 +1,53 @@
+name: Mutants-CI
+
+trigger:
+- master
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  buildConfiguration: 'Release'
+  DockerImageName: 'mutants-proj/mutants'
+  disable.coverage.autogenerate: 'true'
+
+steps:
+  - task: DotNetCoreCLI@2
+    displayName: Restore
+    inputs:
+      command: restore
+
+  - task: DotNetCoreCLI@2
+    displayName: Build
+    inputs:
+      arguments: '--configuration $(BuildConfiguration)'
+
+  - task: DotNetCoreCLI@2
+    displayName: Test
+    inputs:
+      command: test
+      projects: '**/*Tests.csproj'
+      arguments: '--configuration $(buildConfiguration) /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=$(Build.SourcesDirectory)/TestResults/Coverage/'
+      nobuild: true
+
+  - script: |
+      dotnet tool install dotnet-reportgenerator-globaltool --tool-path . 
+      ./reportgenerator "-reports:$(Build.SourcesDirectory)/**/coverage.cobertura.xml" "-targetdir:$(Build.SourcesDirectory)/CodeCoverage" "-reporttypes:HtmlInline_AzurePipelines;Cobertura" "-assemblyfilters:+Mutants.Services;+Mutants.Api"
+    displayName: Create Code coverage report
+
+  - task: PublishCodeCoverageResults@1
+    displayName: 'Publish code coverage'
+    inputs:
+      codeCoverageTool: Cobertura
+      summaryFileLocation: '$(Build.SourcesDirectory)/CodeCoverage/Cobertura.xml'
+      pathToSources: '$(Build.SourcesDirectory)'
+      reportDirectory: '$(Build.SourcesDirectory)/CodeCoverage'
+
+  - task: DotNetCoreCLI@2
+    displayName: Publish
+    inputs:
+      command: publish
+      publishWebProjects: True
+      arguments: '--configuration $(BuildConfiguration)'
+      zipAfterPublish: false
+      modifyOutputPath: false
