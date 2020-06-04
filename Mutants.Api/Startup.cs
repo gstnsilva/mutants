@@ -61,7 +61,6 @@ namespace Mutants.Api
                 
             services.AddResponseCaching();
             
-            services.AddSwaggerDocument();
             services.AddSwaggerDocument(config =>
             {
                 config.PostProcess = document =>
