@@ -29,11 +29,11 @@ namespace Mutants.Api.Tests
 
             var result = await statsController.GetStats();
             
-            var statsResponse = AssertResult<OkObjectResult, StatsResponse>(result, StatusCodes.Status200OK);
+            var statsResponse = AssertResult<OkObjectResult, DnaStats>(result, StatusCodes.Status200OK);
             Assert.NotNull(statsResponse);
             Assert.NotNull(statsResponse.Self);
-            Assert.Equal(_stats.NumberOfHumanSequences, statsResponse.Stats.NumberOfHumanSequences);
-            Assert.Equal(_stats.NumberOfMutantSequences, statsResponse.Stats.NumberOfMutantSequences);
+            Assert.Equal(_stats.NumberOfHumanSequences, statsResponse.NumberOfHumanSequences);
+            Assert.Equal(_stats.NumberOfMutantSequences, statsResponse.NumberOfMutantSequences);
         }
 
         #endregion Test Methods

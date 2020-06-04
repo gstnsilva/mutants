@@ -23,11 +23,8 @@ namespace Mutants.Api.Controllers
         public async Task<IActionResult> GetStats()
         {
             var dnaStats = await _dnaSequenceService.GetDnaStatsAsync();
-            return Ok(new StatsResponse 
-            {
-                Self= Link.To(nameof(GetStats)),
-                Stats = dnaStats
-            });
+            dnaStats.Self = Link.To(nameof(GetStats));
+            return Ok(dnaStats);
         }
     }
 }
