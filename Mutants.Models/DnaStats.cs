@@ -1,11 +1,14 @@
 using Mutants.Core;
-using System;
+using Newtonsoft.Json;
 
 namespace Mutants.Models
 {
     public class DnaStats : Resource
     {
+        [JsonProperty("count_mutant_dna")]
         public long NumberOfMutantSequences { get; set; }
+
+        [JsonProperty("count_human_dna")]
         public long NumberOfHumanSequences { get; set; }
 
         public decimal Ratio => 

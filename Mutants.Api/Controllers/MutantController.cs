@@ -9,11 +9,11 @@ namespace Mutants.Api.Controllers
 {
     [Route("/[controller]")]
     [ApiController]
-    public class MutantsController : ControllerBase
+    public class MutantController : ControllerBase
     {
         private readonly IDnaSequenceService _dnaSequenceService;
 
-        public MutantsController(IDnaSequenceService dnaSequenceService)
+        public MutantController(IDnaSequenceService dnaSequenceService)
         {
             _dnaSequenceService = dnaSequenceService;
         }

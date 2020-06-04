@@ -33,7 +33,7 @@ namespace Mutants.Api.Controllers
                 GetStats = Link.To(nameof(StatsController.GetStats)),
                 RegisterDna = FormMetadata.FromModel(
                     new DnaForm(),
-                    Link.ToForm(nameof(MutantsController.RegisterDna), relations: Form.CreateRelation))
+                    Link.ToForm(nameof(MutantController.RegisterDna), relations: Form.CreateRelation))
             };
 
             if (!_httpRequestHelper.GetEtagHandler(Request).NoneMatch(response))

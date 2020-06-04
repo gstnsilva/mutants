@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Mutants.Api.Tests
 {
-    public class MutantsController_RegisterDnaShould : BaseControllerTest
+    public class MutantController_RegisterDnaShould : BaseControllerTest
     {
         #region Test Methods
 
@@ -40,12 +40,12 @@ namespace Mutants.Api.Tests
 
         #region Test Helpers
 
-        private MutantsController SetupMutantsController(bool isMutant)
+        private MutantController SetupMutantsController(bool isMutant)
         {
             var serviceMock = new Mock<IDnaSequenceService>();
             serviceMock.Setup(x => x.EvaluateDnaSequenceAsync(It.IsAny<DnaForm>())).Returns(Task.FromResult(isMutant));
 
-            return new MutantsController(serviceMock.Object);
+            return new MutantController(serviceMock.Object);
         }
 
         #endregion Test Helpers
