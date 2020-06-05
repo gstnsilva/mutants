@@ -33,7 +33,11 @@ namespace Mutants.Api.Tests
                 Assert.Equal("Welcome to the future!", statusResult.Detail);
             }
             else
-                Assert.IsType<ForbidResult>(result);
+            {
+                var statusResult = AssertResult<ObjectResult, ApiStatusResult>(result, StatusCodes.Status403Forbidden);
+                Assert.Equal("This is human DNA", statusResult.Message);
+                Assert.Equal("Peace was never an option.", statusResult.Detail);
+            }
         }
 
         #endregion Test Methods
