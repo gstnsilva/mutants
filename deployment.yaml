@@ -141,3 +141,28 @@ spec:
           serviceName: mutants-api-backend
           servicePort: 80
 # ingress at mutants-api.907515d351e54d859285.eastus2.aksapp.io
+---
+apiVersion: elasticsearch.k8s.elastic.co/v1
+kind: Elasticsearch
+metadata:
+  name: mutants-elastic
+spec:
+  version: 7.7.1
+  nodeSets:
+  - name: default
+    count: 1
+    config:
+      node.master: true
+      node.data: true
+      node.ingest: true
+      node.store.allow_mmap: false
+---
+apiVersion: kibana.k8s.elastic.co/v1
+kind: Kibana
+metadata:
+  name: mutants-elastic
+spec:
+  version: 7.7.1
+  count: 1
+  elasticsearchRef:
+    name: mutants-elastic

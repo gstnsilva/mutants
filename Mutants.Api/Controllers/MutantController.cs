@@ -30,7 +30,11 @@ namespace Mutants.Api.Controllers
                     Detail = "Welcome to the future!"
                 });
 
-            return Forbid();
+            var humanResult = new ApiStatusResult("This is human DNA")
+            {
+                Detail = "Peace was never an option."
+            };
+            return StatusCode(StatusCodes.Status403Forbidden, humanResult);
         }
     }
 }

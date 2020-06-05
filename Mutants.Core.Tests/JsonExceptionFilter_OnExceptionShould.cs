@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.Abstractions;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Moq;
 using Mutants.Core.Filters;
 using System;
@@ -42,8 +43,9 @@ namespace Mutants.Core.Tests
             {
                 Exception = mockException.Object
             };
+            var loggerMock = new Mock<ILogger<JsonExceptionFilter>>();
 
-            var filter = new JsonExceptionFilter(hostMock.Object);
+            var filter = new JsonExceptionFilter(hostMock.Object, loggerMock.Object);
             filter.OnException(exceptionContext);
             var result = Assert.IsType<ObjectResult>(exceptionContext.Result);
             Assert.Equal(StatusCodes.Status500InternalServerError, result.StatusCode);
