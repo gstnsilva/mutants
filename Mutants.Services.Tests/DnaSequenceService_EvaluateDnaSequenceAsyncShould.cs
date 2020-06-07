@@ -26,7 +26,7 @@ namespace Mutants.Services.Tests
         [MemberData(nameof(DnaSequenceServiceTestData.GetMutantSequences), MemberType = typeof(DnaSequenceServiceTestData))]
         public async Task ReturnTrueWhenMutantSequenceExistsInDb(DnaForm dnaForm)
         {
-            var dnaSequenceService = SetupDnaSequenceService(true);
+            var dnaSequenceService = SetupDnaSequenceServiceForExistingSequence(true);
             var isMutant = await dnaSequenceService.EvaluateDnaSequenceAsync(dnaForm);
             Assert.True(isMutant);
         }
@@ -35,7 +35,7 @@ namespace Mutants.Services.Tests
         [MemberData(nameof(DnaSequenceServiceTestData.GetHumanSequences), MemberType = typeof(DnaSequenceServiceTestData))]
         public async Task ReturnFalseWhenHumanSequenceExistsInDb(DnaForm dnaForm)
         {
-            var dnaSequenceService = SetupDnaSequenceService(false);
+            var dnaSequenceService = SetupDnaSequenceServiceForExistingSequence(false);
             var isMutant = await dnaSequenceService.EvaluateDnaSequenceAsync(dnaForm);
             Assert.False(isMutant);            
         }
