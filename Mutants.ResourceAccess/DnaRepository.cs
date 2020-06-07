@@ -18,5 +18,10 @@ namespace Mutants.ResourceAccess
         {
             return CountAsync(x => x.IsMutant);
         }
+
+        public Task<DnaSequence> GetDnaSequenceAsync(string[] sequence)
+        {
+            return base.GetOneAsync<DnaSequence>(doc => doc.Sequence == sequence);
+        }
     }
 }

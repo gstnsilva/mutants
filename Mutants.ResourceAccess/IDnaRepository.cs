@@ -8,5 +8,6 @@ namespace Mutants.ResourceAccess
     {
         Task<long> GetNumberOfHumanDnaSequences();
         Task<long> GetNumberOfMutantDnaSequences();
+        Task<DnaSequence> GetDnaSequenceAsync(string[] sequence);
     }
 }

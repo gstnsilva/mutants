@@ -1,7 +1,7 @@
-﻿using Microsoft.Extensions.Options;
-using Mutants.DomainModels;
+﻿using Mutants.DomainModels;
 using Mutants.Models;
 using Mutants.ResourceAccess;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Mutants.Services
@@ -19,7 +19,11 @@ namespace Mutants.Services
 
         public async Task<bool> EvaluateDnaSequenceAsync(DnaForm dnaForm)
         {
-            var sequence = dnaForm.Dna;
+            var sequence = dnaForm.Dna.Select(x => x.ToUpper()).ToArray();
+            var existingDna = await _dnaRepository.GetDnaSequenceAsync(sequence);
+            if (null != existingDna)
+                return existingDna.IsMutant;
+
             var isMutant = _dnaSequenceEvaluator.IsMutantDna(sequence);
             var dnaSequence = new DnaSequence 
             { 
